@@ -28,25 +28,47 @@
                         <label>Name <span>*</span></label>
                         <input type="text" name="name" value="" id=""
                                class="form-control">
+                        <span style="color:red;">
+                        <?php
+                        echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
+                        unset($_SESSION['error']);
+                        ?>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <textarea name="description" id="" cols="30" rows="5"
-                                  class="form-control"></textarea>
+                                  class="form-control"><?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Salary</label>
-                        <input type="number" name="salary" value="" id=""
+                        <input type="number" name="salary"
+                               value="<?php echo isset($_POST['salary']) ? $_POST['salary'] : ''; ?>" id=""
                                class="form-control">
                     </div>
                     <div class="form-group">
+                        <?php
+                        $checkedMale = 'checked';
+                        $checkedFemale = '';
+                        if (isset($_POST['gender'])) {
+                            switch ($_POST['gender']) {
+                                case 0:
+                                    $checkedMale = 'checked';
+                                    break;
+                                case 1:
+                                    $checkedFemale = 'checked';
+                                    break;
+                            }
+                        }
+                        ?>
                         <label>Gender</label> <br>
-                        <input type="radio" name="gender" value="0" id="" > Male &nbsp;
-                        <input type="radio" name="gender" value="1" id="" > Female
+                        <input type="radio" name="gender" value="0" <?php echo $checkedMale; ?> id=""> Male &nbsp;
+                        <input type="radio" name="gender" value="1" <?php echo $checkedFemale; ?> id=""> Female
                     </div>
                     <div class="form-group">
                         <label>Birthday</label>
-                        <input type="date" name="birthday" value=""
+                        <input type="date" name="birthday"
+                               value="<?php echo isset($_POST['birthday']) ? $_POST['birthday'] : ''; ?>"
                                id="" class="form-control">
                     </div>
                 </div>
@@ -63,6 +85,6 @@
 
 
 <!--    js file-->
-<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

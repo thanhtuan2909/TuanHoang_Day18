@@ -6,11 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Record</title>
-    <link rel="stylesheet" href="../../assets/css/normalize.css">
-    <link rel="stylesheet" href="../../assets/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets/js/jquery-3.4.1.min.js">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/js/jquery-3.4.1.min.js">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <div class="container">
@@ -30,30 +30,49 @@
                     <div class="form-group">
                         <label>Name <span>*</span></label>
                         <input type="text" name="name"
-                               value="" id=""
+                               value="<?php echo $isUpdate['name'] ?>" id=""
                                class="form-control">
+                        <span style="color:red;">
+                        <?php
+                        echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
+                        unset($_SESSION['error']);
+                        ?>
+                        </span>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <textarea name="description" id="" cols="30" rows="5"
-                                  class="form-control"></textarea>
+                                  class="form-control"><?php echo $isUpdate['description'] ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Salary</label>
-                        <input type="text" name="salary"
-                               value="" id=""
+                        <input type="number" name="salary"
+                               value="<?php echo $isUpdate['salary'] ?>" id=""
                                class="form-control">
                     </div>
                     <div class="form-group">
+                        <?php
+                        $checkedMale = 'checked';
+                        $checkedFemale = '';
+
+                        switch ($isUpdate['gender']) {
+                            case 0:
+                                $checkedMale = 'checked';
+                                break;
+                            case 1:
+                                $checkedFemale = 'checked';
+                                break;
+                        }
+                        ?>
                         <label>Gender</label> <br>
-                        <input type="radio" name="gender" value="0" id="" checked> Male
+                        <input type="radio" name="gender" value="0" <?php echo $checkedMale; ?> id=""> Male
                         &nbsp;
-                        <input type="radio" name="gender" value="1" id=""> Female
+                        <input type="radio" name="gender" value="1" <?php echo $checkedFemale; ?> id=""> Female
                     </div>
                     <div class="form-group">
                         <label>Birthday</label>
-                        <input type="text" name="birthday"
-                               value="" id=""
+                        <input type="date" name="birthday"
+                               value="<?php echo $isUpdate['birthday'] ?>" id=""
                                class="form-control">
                     </div>
                 </div>
@@ -70,6 +89,6 @@
 
 
 <!--    js file-->
-<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

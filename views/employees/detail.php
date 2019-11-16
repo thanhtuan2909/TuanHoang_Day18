@@ -6,11 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>View Record</title>
-    <link rel="stylesheet" href="../../assets/css/normalize.css">
-    <link rel="stylesheet" href="../../assets/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../assets/js/jquery-3.4.1.min.js">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/js/jquery-3.4.1.min.js">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <div class="container">
@@ -26,32 +26,59 @@
                 <div class="main-form">
                     <div class="form-group">
                         <label>ID <span>*</span></label>
-                        <input type="text" name="id" value="" id="" class="form-control" disabled>
+                        <input type="text" name="id" value="<?php echo $isDetail['id']; ?>" id="" class="form-control"
+                               disabled>
                     </div>
                     <div class="form-group">
                         <label>Name <span>*</span></label>
-                        <input type="text" name="name" value="" id="" class="form-control" disabled>
+                        <input type="text" name="name" value="<?php echo $isDetail['name']; ?>" id=""
+                               class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea name="description" id="" cols="30" rows="5" class="form-control" disabled></textarea>
+                        <textarea name="description" id="" cols="30" rows="5" class="form-control"
+                                  disabled><?php echo $isDetail['description']; ?></textarea>
                     </div>
                     <div class="form-group">
+                        <?php
+                        $salary = number_format($isDetail['salary'], 0, ',', '.') . " VNĐ";
+                        ?>
                         <label>Salary</label>
-                        <input type="text" name="salary" value="" id="" class="form-control" disabled>
+                        <input type="text" name="salary" value="<?php echo $salary; ?>" id="" class="form-control"
+                               disabled>
                     </div>
                     <div class="form-group">
+                        <?php
+                        $checkedMale = 'checked';
+                        $checkedFemale = '';
+                        switch ($isDetail['gender']) {
+                            case 0:
+                                $checkedMale = 'checked';
+                                break;
+                            case 1:
+                                $checkedFemale = 'checked';
+                                break;
+                        }
+                        ?>
                         <label>Gender</label> <br>
-                        <input type="radio" name="gender" value="0" id="" disabled> Male &nbsp;
-                        <input type="radio" name="gender" value="1" id="" disabled> Female
+                        <input type="radio" name="gender" value="0" id="" <?php echo $checkedMale; ?> disabled> Male &nbsp;
+                        <input type="radio" name="gender" value="1" id="" <?php echo $checkedFemale; ?> disabled> Female
                     </div>
                     <div class="form-group">
+                        <?php
+                        $birthday = date('d-m-Y', strtotime($isDetail['birthday']));
+                        ?>
                         <label>Birthday</label>
-                        <input type="text" name="birthday" value="" id="" class="form-control" disabled>
+                        <input type="text" name="birthday" value="<?php echo $birthday; ?>" id=""
+                               class="form-control" disabled>
                     </div>
                     <div class="form-group">
+                        <?php
+                        $created_at = date('d-m-Y H:i:s', strtotime($isDetail['created_at']));
+                        ?>
                         <label>Created at</label>
-                        <input type="text" name="created_at" value="" id="" class="form-control" disabled>
+                        <input type="text" name="created_at" value="<?php echo $created_at; ?>" id=""
+                               class="form-control" disabled>
                     </div>
                 </div>
                 <div class="submit">
@@ -66,6 +93,6 @@
 
 
 <!--    js file-->
-<script type="text/javascript" src="../../assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
 </body>
 </html>

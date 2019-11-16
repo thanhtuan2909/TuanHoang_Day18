@@ -19,17 +19,42 @@ class EmployeeController
     public function insert()
     {
         $employee = new Employee();
-        $employees = $employee->insert();
+        $isInsert = $employee->insert();
         require_once 'views/employees/add.php';
+    }
+
+    public function detail()
+    {
+        $id = $_GET['id'];
+        if (!is_numeric($id)){
+            header('Location: index.php');
+            exit();
+        }
+        $employee = new Employee();
+        $isDetail = $employee->detail($id);
+        require_once 'views/employees/detail.php';
     }
 
     public function update()
     {
-
+        $id = $_GET['id'];
+        if (!is_numeric($id)) {
+            header('Location: index.php');
+            exit();
+        }
+        $employee = new Employee();
+        $isUpdate = $employee->update($id);
+        require_once 'views/employees/edit.php';
     }
 
     public function delete()
     {
-
+        $id = $_GET['id'];
+        if (!is_numeric($id)) {
+            header('Location: index.php');
+            exit();
+        }
+        $employee = new Employee();
+        $employee->delete($id);
     }
 }

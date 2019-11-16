@@ -95,11 +95,10 @@
                                 ?>
                             </td>
                             <td>
-                                <a href="detail.php?id=<?php echo $employee['id'] ?>"><i class="fas fa-eye"></i></a>&nbsp;&nbsp;
-                                <a href="update.php?id=<?php echo $employee['id'] ?>"><i class="fas fa-pen"></i></a>&nbsp;&nbsp;
-                                <a href="delete.php?id=<?php echo $employee['id'] ?>"
-                                   onclick="return confirm('Are you sure delete?');"><i
-                                            class="fas fa-trash-alt"></i></a>
+                                <a href="index.php?controller=employee&action=detail&id=<?php echo $employee['id']; ?>"><i class="fas fa-eye"></i></a>&nbsp;&nbsp;
+                                <a href="index.php?controller=employee&action=update&id=<?php echo $employee['id'] ?>"><i class="fas fa-pen"></i></a>&nbsp;&nbsp;
+                                <a href="index.php?controller=employee&action=delete&id=<?php echo $employee['id'] ?>"
+                                   onclick="return confirm('Are you sure delete?');"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

@@ -17,6 +17,6 @@ require_once "$pathController";
 $classController = $controller . "Controller";
 $object = new $classController();
 if (!method_exists($object, $action)){
-    die("Phương thức $action không tồn tài trong $classController");
+    die("404 Error");
 }
 $object->$action();
