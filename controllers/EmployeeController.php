@@ -18,8 +18,35 @@ class EmployeeController
 
     public function insert()
     {
-        $employee = new Employee();
-        $isInsert = $employee->insert();
+        $error = '';
+        if (isset($_POST['save'])) {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $gender = $_POST['gender'];
+            $salary = $_POST['salary'];
+            $birthday = $_POST['birthday'];
+
+            if (empty($name)) {
+                $error = 'Name không được để trống';
+            } else {
+                $employee = new Employee();
+                $employeeArr = [
+                    'name' => $name,
+                    'description' => $description,
+                    'gender' => $gender,
+                    'salary' => $salary,
+                    'birthday' => $birthday
+                ];
+                $isInsert = $employee->insert($employeeArr);
+                if ($isInsert) {
+                    $_SESSION['success'] = 'Thêm mới nhân viên thành công';
+                } else {
+                    $_SESSION['error'] = 'Thêm mới thất bại';
+                }
+                header('Location: index.php');
+                exit();
+            }
+        }
         require_once 'views/employees/add.php';
     }
 
@@ -31,19 +58,55 @@ class EmployeeController
             exit();
         }
         $employee = new Employee();
-        $isDetail = $employee->detail($id);
+        $employee = $employee->getEmployeeById($id);
         require_once 'views/employees/detail.php';
     }
 
     public function update()
     {
         $id = $_GET['id'];
-        if (!is_numeric($id)) {
+        if (!isset($id)) {
+            $_SESSION['error'] = 'Tham số không hợp lệ';
             header('Location: index.php');
-            exit();
+            return;
         }
-        $employee = new Employee();
-        $isUpdate = $employee->update($id);
+        if (!is_numeric($id)) {
+            $_SESSION['error'] = 'Id phải là số';
+            header('Location: index.php');
+            return;
+        }
+        $employeeModel = new Employee();
+        $employee = $employeeModel->getEmployeeById($id);
+        $error = '';
+        if (isset($_POST['save'])) {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $gender = $_POST['gender'];
+            $salary = $_POST['salary'];
+            $birthday = $_POST['birthday'];
+
+            if (empty($name)) {
+                $error = 'Name không được để trống';
+            } else {
+                $employeeModel = new Employee();
+                $employeeArr = [
+                    'id' => $id,
+                    'name' => $name,
+                    'description' => $description,
+                    'gender' => $gender,
+                    'salary' => $salary,
+                    'birthday' => $birthday
+                ];
+                $isUpdate = $employeeModel->update($employeeArr);
+                if ($isUpdate) {
+                    $_SESSION['success'] = 'Cập nhật nhân viên thành công';
+                } else {
+                    $_SESSION['error'] = 'Cập nhật nhân viên thất bại';
+                }
+                header('Location: index.php');
+                exit();
+            }
+        }
         require_once 'views/employees/edit.php';
     }
 
@@ -51,10 +114,18 @@ class EmployeeController
     {
         $id = $_GET['id'];
         if (!is_numeric($id)) {
+            $_SESSION['error'] = 'Id phải là số';
             header('Location: index.php');
             exit();
         }
         $employee = new Employee();
-        $employee->delete($id);
+        $isDelete = $employee->delete($id);
+        if ($isDelete) {
+            $_SESSION['success'] = "Xóa bản ghi #$id thành công";
+        } else {
+            $_SESSION['error'] = "Xóa bản ghi #$id thất bại";
+        }
+        header('Location: index.php');
+        exit();
     }
 }

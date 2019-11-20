@@ -30,32 +30,34 @@
                     <div class="form-group">
                         <label>Name <span>*</span></label>
                         <input type="text" name="name"
-                               value="<?php echo $isUpdate['name'] ?>" id=""
+                               value="<?php echo isset($_POST['name']) ? $_POST['name'] : $employee['name']; ?>" id=""
                                class="form-control">
                         <span style="color:red;">
-                        <?php
-                        echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
-                        unset($_SESSION['error']);
-                        ?>
+                        <?php echo $error; ?>
                         </span>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <textarea name="description" id="" cols="30" rows="5"
-                                  class="form-control"><?php echo $isUpdate['description'] ?></textarea>
+                                  class="form-control"><?php echo isset($_POST['description']) ? $_POST['description'] : $employee['description']; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Salary</label>
                         <input type="number" name="salary"
-                               value="<?php echo $isUpdate['salary'] ?>" id=""
+                               value="<?php echo isset($_POST['salary']) ? $_POST['salary'] : $employee['salary']; ?>" id=""
                                class="form-control">
                     </div>
                     <div class="form-group">
                         <?php
                         $checkedMale = 'checked';
                         $checkedFemale = '';
+                        if (isset($_POST['gender'])){
+                            $gender = $_POST['gender'];
+                        } else {
+                            $gender = $employee['gender'];
+                        }
 
-                        switch ($isUpdate['gender']) {
+                        switch ($gender) {
                             case 0:
                                 $checkedMale = 'checked';
                                 break;
@@ -72,7 +74,7 @@
                     <div class="form-group">
                         <label>Birthday</label>
                         <input type="date" name="birthday"
-                               value="<?php echo $isUpdate['birthday'] ?>" id=""
+                               value="<?php echo isset($_POST['birthday']) ? $_POST['birthday'] : $employee['birthday']; ?>" id=""
                                class="form-control">
                     </div>
                 </div>

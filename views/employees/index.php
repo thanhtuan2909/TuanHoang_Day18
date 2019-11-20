@@ -27,22 +27,9 @@
                 </div>
             </div>
             <hr>
-            <span style="color: green;">
-                <?php
-                if (!empty($_SESSION['success'])) {
-                    echo $_SESSION['success'];
-                    unset($_SESSION['success']);
-                }
-                ?>
-            </span>
-            <span style="color: red;">
-                <?php
-                if (!empty($_SESSION['error'])) {
-                    echo $_SESSION['error'];
-                    unset($_SESSION['error']);
-                }
-                ?>
-            </span>
+            <?php
+            require_once 'views/commons/message.php';
+            ?>
         </div>
         <div class="main">
             <table border="1" cellspacing="0" cellpadding="5">
@@ -94,10 +81,15 @@
                                 echo $created_at;
                                 ?>
                             </td>
+                            <?php
+                            $urlDetail = 'index.php?controller=employee&action=detail&id=' . $employee['id'];
+                            $urlUpdate = 'index.php?controller=employee&action=update&id=' . $employee['id'];
+                            $urlDelete = 'index.php?controller=employee&action=delete&id=' . $employee['id'];
+                            ?>
                             <td>
-                                <a href="index.php?controller=employee&action=detail&id=<?php echo $employee['id']; ?>"><i class="fas fa-eye"></i></a>&nbsp;&nbsp;
-                                <a href="index.php?controller=employee&action=update&id=<?php echo $employee['id'] ?>"><i class="fas fa-pen"></i></a>&nbsp;&nbsp;
-                                <a href="index.php?controller=employee&action=delete&id=<?php echo $employee['id'] ?>"
+                                <a href="<?php echo $urlDetail; ?>"><i class="fas fa-eye"></i></a>&nbsp;&nbsp;
+                                <a href="<?php echo $urlUpdate; ?>"><i class="fas fa-pen"></i></a>&nbsp;&nbsp;
+                                <a href="<?php echo  $urlDelete; ?>"
                                    onclick="return confirm('Are you sure delete?');"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>

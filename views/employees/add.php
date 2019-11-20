@@ -28,12 +28,9 @@
                         <label>Name <span>*</span></label>
                         <input type="text" name="name" value="" id=""
                                class="form-control">
-                        <span style="color:red;">
-                        <?php
-                        echo isset($_SESSION['error']) ? $_SESSION['error'] : '';
-                        unset($_SESSION['error']);
-                        ?>
-                        </span>
+                        <div style="color: red">
+                            <?php echo $error; ?>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Description</label>

@@ -5,6 +5,7 @@
  * Date: 11/15/2019
  * Time: 4:48 PM
  */
+session_start();
 $controller = isset($_GET['controller']) ? $_GET['controller'] : 'employee';
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $controller = ucfirst($controller);

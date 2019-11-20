@@ -6,7 +6,6 @@
  * Date: 11/15/2019
  * Time: 4:51 PM
  */
-session_start();
 
 class Employee
 {
@@ -22,7 +21,7 @@ class Employee
     {
         $connection = $this->connectDB();
 
-        $querySelect = "Select * from employees";
+        $querySelect = "SELECT * FROM employees";
         $result = mysqli_query($connection, $querySelect);
         $employees = [];
 
@@ -34,40 +33,20 @@ class Employee
         return $employees;
     }
 
-    public function insert($name = null, $description = null, $gender = null, $salary = null, $birthday = null)
+    public function insert($param = [])
     {
         $connection = $this->connectDB();
-        if (isset($_POST['save'])) {
-            $name = $_POST['name'];
-            $description = $_POST['description'];
-            $gender = $_POST['gender'];
-            $salary = $_POST['salary'];
-            $birthday = $_POST['birthday'];
-
-            if (empty($name)) {
-                $_SESSION['error'] = 'Name không được để trống';
-            } else {
-                $sqlInsert = "Insert into employees(`name`,`description`,`gender`,`salary`,`birthday`) 
-                values ('$name','$description',$gender,$salary,'$birthday')";
-                $isInsert = mysqli_query($connection, $sqlInsert);
-                if ($isInsert) {
-                    $_SESSION['success'] = 'Thêm mới nhân viên thành công';
-                    header('Location: index.php');
-                    exit();
-                } else {
-                    $_SESSION['error'] = 'Thêm mới thất bại';
-                    header('Location: index.php');
-                    exit();
-                }
-            }
-        }
+        $sqlInsert = "INSERT INTO employees(`name`,`description`,`gender`,`salary`,`birthday`) 
+                VALUES ('{$param['name']}','{$param['description']}',{$param['gender']},{$param['salary']},'{$param['birthday']}')";
+        $isInsert = mysqli_query($connection, $sqlInsert);
         $this->closeDB($connection);
+        return $isInsert;
     }
 
-    public function detail($id = null)
+    public function getEmployeeById($id = null)
     {
         $connection = $this->connectDB();
-        $sqlSelect = "Select * From employees where id = {$id}";
+        $sqlSelect = "SELECT * FROM employees WHERE id = {$id}";
         $result = mysqli_query($connection, $sqlSelect);
         $employee = [];
         if (mysqli_num_rows($result) > 0) {
@@ -76,61 +55,24 @@ class Employee
         }
         $this->closeDB($connection);
         return $employee;
-    }
+    }    
 
-    public function update($id = null, $name = null, $description = null, $gender = null, $salary = null, $birthday = null)
+    public function update($employee = [])
     {
         $connection = $this->connectDB();
-        $sqlSelect = "Select * From employees Where id = {$id}";
-        $result = mysqli_query($connection, $sqlSelect);
-        $employee = [];
-        if (mysqli_num_rows($result) > 0) {
-            $employee = mysqli_fetch_all($result, MYSQLI_ASSOC);
-            $employee = $employee[0];
-        }
-
-        if (isset($_POST['save'])) {
-            $name = $_POST['name'];
-            $description = $_POST['description'];
-            $gender = $_POST['gender'];
-            $salary = $_POST['salary'];
-            $birthday = $_POST['birthday'];
-
-            if (empty($name)) {
-                $_SESSION['error'] = 'Name không được để trống';
-            } else {
-                $sqlUpdate = "UPDATE employees SET `name` = '$name', `description` = '$description', `salary` = $salary, `gender` = $gender, `birthday` = '$birthday' WHERE id = {$employee['id']}";
-                $isUpdate = mysqli_query($connection, $sqlUpdate);
-                if ($isUpdate) {
-                    $_SESSION['success'] = 'Cập nhật nhân viên thành công';
-                    header('Location: index.php');
-                    exit();
-                } else {
-                    $_SESSION['error'] = 'Cập nhật nhân viên thất bại';
-                    header('Location: index.php');
-                    exit();
-                }
-            }
-        }
+        $sqlUpdate = "UPDATE employees SET `name` = '{$employee['name']}', `description` = '{$employee['description']}', `salary` = {$employee['salary']}, `gender` = {$employee['gender']}, `birthday` = '{$employee['birthday']}' WHERE `id` = {$employee['id']}";
+        $isUpdate = mysqli_query($connection, $sqlUpdate);
         $this->closeDB($connection);
-        return $employee;
+        return $isUpdate;
     }
 
     public function delete($id = null)
     {
         $connection = $this->connectDB();
-        $sqlDelete = "Delete from employees where id = {$id}";
+        $sqlDelete = "DELETE FROM employees WHERE id = {$id}";
         $isDelete = mysqli_query($connection, $sqlDelete);
-        if ($isDelete) {
-            $_SESSION['success'] = 'Xóa nhân viên thành công';
-            header('Location: index.php');
-            exit();
-        } else {
-            $_SESSION['error'] = 'Xóa nhân viên thất bại';
-            header('Location: index.php');
-            exit();
-        }
         $this->closeDB($connection);
+        return $isDelete;
     }
 
     public function connectDB()

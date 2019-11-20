@@ -26,22 +26,22 @@
                 <div class="main-form">
                     <div class="form-group">
                         <label>ID <span>*</span></label>
-                        <input type="text" name="id" value="<?php echo $isDetail['id']; ?>" id="" class="form-control"
+                        <input type="text" name="id" value="<?php echo $employee['id']; ?>" id="" class="form-control"
                                disabled>
                     </div>
                     <div class="form-group">
                         <label>Name <span>*</span></label>
-                        <input type="text" name="name" value="<?php echo $isDetail['name']; ?>" id=""
+                        <input type="text" name="name" value="<?php echo $employee['name']; ?>" id=""
                                class="form-control" disabled>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <textarea name="description" id="" cols="30" rows="5" class="form-control"
-                                  disabled><?php echo $isDetail['description']; ?></textarea>
+                                  disabled><?php echo $employee['description']; ?></textarea>
                     </div>
                     <div class="form-group">
                         <?php
-                        $salary = number_format($isDetail['salary'], 0, ',', '.') . " VNĐ";
+                        $salary = number_format($employee['salary'], 0, ',', '.') . " VNĐ";
                         ?>
                         <label>Salary</label>
                         <input type="text" name="salary" value="<?php echo $salary; ?>" id="" class="form-control"
@@ -51,7 +51,7 @@
                         <?php
                         $checkedMale = 'checked';
                         $checkedFemale = '';
-                        switch ($isDetail['gender']) {
+                        switch ($employee['gender']) {
                             case 0:
                                 $checkedMale = 'checked';
                                 break;
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <?php
-                        $birthday = date('d-m-Y', strtotime($isDetail['birthday']));
+                        $birthday = date('d-m-Y', strtotime($employee['birthday']));
                         ?>
                         <label>Birthday</label>
                         <input type="text" name="birthday" value="<?php echo $birthday; ?>" id=""
@@ -74,7 +74,7 @@
                     </div>
                     <div class="form-group">
                         <?php
-                        $created_at = date('d-m-Y H:i:s', strtotime($isDetail['created_at']));
+                        $created_at = date('d-m-Y H:i:s', strtotime($employee['created_at']));
                         ?>
                         <label>Created at</label>
                         <input type="text" name="created_at" value="<?php echo $created_at; ?>" id=""
